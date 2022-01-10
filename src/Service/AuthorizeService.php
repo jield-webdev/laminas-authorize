@@ -1,17 +1,14 @@
 <?php
 
-namespace JieldAuthorize\Service;
+namespace Jield\Authorize\Service;
 
-use Application\Permissions\Acl\Assertion\AbstractAssertion;
-use Application\Permissions\Acl\Assertion\AbstractEntityAssertion;
-use Application\Permissions\Acl\Role\ContactRole;
 use BjyAuthorize\Provider\Identity\ProviderInterface as IdentityProvider;
 use BjyAuthorize\Service\Authorize;
 use Interop\Container\ContainerInterface;
+use Jield\Authorize\Role\UserAsRole;
 use Laminas\Cache\Exception\ExceptionInterface;
 use Laminas\Cache\Storage\Adapter\Redis;
 use Laminas\Cache\Storage\StorageInterface;
-use Laminas\Mvc\MvcEvent;
 use Laminas\Permissions\Acl\Acl;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -124,50 +121,9 @@ class AuthorizeService extends Authorize
         $this->acl->allow($roles, $resources, $privileges);
     }
 
-    public function getIdentity(): ContactRole
+    public function getIdentity(): UserAsRole
     {
         return $this->getIdentityProvider()->getIdentity();
-    }
-
-    public function loadRulesWithAssertions(MvcEvent $event): void
-    {
-        //Grab the routeMatch from the event
-        $routeMatch = $event->getRouteMatch()?->getMatchedRouteName();
-        $action     = $event->getRouteMatch()?->getParam('action');
-        $privilege  = $event->getRouteMatch()?->getParam('privilege');
-
-        //Procude an equivalent assertion name
-        $assertionName = sprintf('route/%s', $routeMatch);
-
-        //Try to see if we can find the assertion name in the list of rules
-        $assertionClass = $this->rulesWithAssertions[$assertionName] ?? null;
-
-        if (null !== $assertionClass) {
-            //We only do allow rules
-            if ($this->container->has($assertionClass)) {
-                /** @var AbstractEntityAssertion|AbstractAssertion $assert */
-                $assert = $this->container->get($assertionClass);
-
-                if ($assert instanceof AbstractEntityAssertion) {
-                    $assert->setRouteMatch($event->getRouteMatch());
-                }
-                print sprintf(
-                    "Setting allow rule %s with privilege %s using assert %s",
-                    $assertionName,
-                    $privilege ?? $action,
-                    $assertionClass
-                );
-
-                //Do not specify any roles, we do that in the assertion, giving a role would lead to ignorance of the assertion
-                $this->acl->allow(
-                    roles:     null,
-                    resources: $assertionName,
-                    assert:    $assert
-                );
-            } else {
-                throw new \InvalidArgumentException(sprintf('Assertion class %s cannot be found', $assertionClass));
-            }
-        }
     }
 
     public function getIdentityRoles(): array

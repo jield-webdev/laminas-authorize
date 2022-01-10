@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace JieldAuthorize\Factory;
+namespace Jield\Authorize\Factory;
 
 use Interop\Container\ContainerInterface;
-use JieldAuthorize\Service\AuthorizeService;
+use Jield\Authorize\Service\AuthorizeService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;

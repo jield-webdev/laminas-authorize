@@ -2,17 +2,26 @@
 
 declare(strict_types=1);
 
-namespace JieldAutorize\Factory;
+namespace Jield\Authorize\Factory;
 
-use Application\Service\AssertionService;
-use BjyAuthorize\Service\Authorize;
 use Interop\Container\ContainerInterface;
+use Jield\Authorize\Service\AssertionService;
+use Jield\Authorize\Service\AuthorizeService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 final class AssertionServiceFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null): AssertionService
-    {
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function __invoke(
+        ContainerInterface $container,
+        $requestedName,
+        ?array $options = null
+    ): AssertionService {
         return new AssertionService($container);
     }
 }

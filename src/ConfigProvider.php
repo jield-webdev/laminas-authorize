@@ -1,14 +1,20 @@
 <?php
 
-namespace JieldAuthorize;
+namespace Jield\Authorize;
 
 use BjyAuthorize\Service\Authorize;
+use BjyAuthorize\Service\RouteGuardServiceFactory;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
-use JieldAuthorize\Factory\AuthorizeServiceFactory;
-use JieldAuthorize\Service\AssertionService;
-use JieldAuthorize\Service\AuthorizeService;
-use JieldAutorize\Factory\AssertionServiceFactory;
+use Jield\Authorize\Factory\AssertionServiceFactory;
+use Jield\Authorize\Factory\AuthorizeServiceFactory;
+use Jield\Authorize\Provider\Identity\AuthenticationIdentityProvider;
+use Jield\Authorize\Rule\RuleWithAssertion;
+use Jield\Authorize\Service\AssertionService;
+use Jield\Authorize\Service\AuthorizeService;
+use Jield\Authorize\View\UnauthorizedStrategy;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 
 class ConfigProvider
 {
@@ -26,8 +32,48 @@ class ConfigProvider
                 Authorize::class => AuthorizeService::class
             ],
             'factories' => [
-                AuthorizeService::class => AuthorizeServiceFactory::class,
-                AssertionService::class => AssertionServiceFactory::class
+                AuthenticationIdentityProvider::class => ConfigAbstractFactory::class,
+                UnauthorizedStrategy::class           => ConfigAbstractFactory::class,
+                AuthorizeService::class               => AuthorizeServiceFactory::class,
+                AssertionService::class               => AssertionServiceFactory::class,
+                RuleWithAssertion::class              => RouteGuardServiceFactory::class
+            ],
+        ];
+    }
+
+    #[ArrayShape([
+        AuthenticationIdentityProvider::class => "string[]",
+        UnauthorizedStrategy::class           => "string[]"
+    ])] public function getConfigAbstractFactory(): array
+    {
+        return [
+            AuthenticationIdentityProvider::class => [
+                AuthenticationService::class,
+                'BjyAuthorize\Config'
+            ],
+            UnauthorizedStrategy::class           => [
+                AuthenticationService::class,
+                'BjyAuthorize\Config'
+            ]
+        ];
+    }
+
+    #[ArrayShape([
+        'identity_provider'     => "string",
+        'unauthorized_strategy' => "string",
+        'cache_enabled'         => "bool",
+        'role_providers'        => "\string[][]"
+    ])] public function getBjyAuthorizeConfig(): array
+    {
+        return [
+            'identity_provider'     => AuthenticationIdentityProvider::class,
+            'unauthorized_strategy' => UnauthorizedStrategy::class,
+            'cache_enabled'         => true,
+            'role_providers'        => [
+                ObjectRepositoryProvider::class => [
+                    'object_manager'    => EntityManager::class,
+                    'role_entity_class' => Access::class,
+                ],
             ],
         ];
     }

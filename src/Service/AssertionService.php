@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace JieldAuthorize\Service;
+namespace Jield\Authorize\Service;
 
 use Laminas\Permissions\Acl\Acl;
 use Laminas\ServiceManager\ServiceManager;

@@ -1,6 +1,6 @@
 <?php
 
-namespace JieldAuthorize\Permissions\Acl\Role;
+namespace Jield\Authorize\Permissions\Acl\Role;
 
 use Contact\Entity\Contact;
 use Laminas\Permissions\Acl\Role\RoleInterface;
