@@ -1,0 +1,68 @@
+{
+  "name": "jield-webdev/jield-authorize",
+  "description": "Small helper module to integrate BjyAuthorize (the kokspflanze/bjy-authorize fork) with dynamic assertions, which cannot be serialized",
+  "homepage": "https://jield.nl",
+  "authors": [
+    {
+      "name": "Johan van der Heide",
+      "email": "info@jield.nl",
+      "homepage": "https://jield.nl"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^8.0 || ^8.1",
+    "kokspflanze/bjy-authorize": "^2.4",
+    "iteaoffice/testing": "^3"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest"
+  },
+  "autoload": {
+    "psr-4": {
+      "JieldAuthorize\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "JieldAuthorizeTest\\": "test"
+    }
+  },
+  "bin": [
+    "bin"
+  ],
+  "config": {
+    "vendor-dir": "vendor",
+    "optimize-autoloader": true
+  },
+  "extra": {
+    "laminas": {
+      "component": "Laminas\\Cache",
+      "config-provider": "Laminas\\Cache\\ConfigProvider"
+    },
+    "branch-alias": {
+      "dev-master": "0.1-dev",
+      "dev-develop": "0.2-dev"
+    }
+  },
+  "scripts": {
+    "check": [
+      "@cs",
+      "@test",
+      "@phpstan"
+    ],
+    "fix": [
+      "@cbf",
+      "@cs-fix"
+    ],
+    "lint": [
+      "@php-lint"
+    ],
+    "php-lint": "parallel-lint module",
+    "phpstan": "phpstan analyze module",
+    "cs": "phpcs --extensions=php,twig module",
+    "cbf": "phpcbf --extensions=php module",
+    "cs-fix": "php-cs-fixer fix -v module",
+    "test": "phpunit"
+  }
+}
