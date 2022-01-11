@@ -14,6 +14,7 @@
   "require": {
     "php": "^8.0 || ^8.1",
     "kokspflanze/bjy-authorize": "^2.4",
+    "doctrine/orm": "^2.11 || ^3.0",
     "iteaoffice/testing": "^3"
   },
   "require-dev": {
@@ -21,12 +22,12 @@
   },
   "autoload": {
     "psr-4": {
-      "JieldAuthorize\\": "src"
+      "Jield\\Authorize\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "JieldAuthorizeTest\\": "test"
+      "Jield\\AuthorizeTest\\": "test"
     }
   },
   "bin": [
@@ -38,8 +39,8 @@
   },
   "extra": {
     "laminas": {
-      "component": "Laminas\\Cache",
-      "config-provider": "Laminas\\Cache\\ConfigProvider"
+      "component": "Jield\\Authorize",
+      "config-provider": "Jield\\Authorize\\ConfigProvider"
     },
     "branch-alias": {
       "dev-master": "0.1-dev",

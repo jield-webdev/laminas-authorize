@@ -7,7 +7,9 @@ use BjyAuthorize\Service\RouteGuardServiceFactory;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
 use Jield\Authorize\Factory\AssertionServiceFactory;
+use Jield\Authorize\Factory\AuthenticationIdentityProviderFactory;
 use Jield\Authorize\Factory\AuthorizeServiceFactory;
+use Jield\Authorize\Factory\ConfigServiceFactory;
 use Jield\Authorize\Provider\Identity\AuthenticationIdentityProvider;
 use Jield\Authorize\Rule\RuleWithAssertion;
 use Jield\Authorize\Service\AssertionService;
@@ -32,10 +34,11 @@ class ConfigProvider
                 Authorize::class => AuthorizeService::class
             ],
             'factories' => [
-                AuthenticationIdentityProvider::class => ConfigAbstractFactory::class,
+                'BjyAuthorize\Config'                 => ConfigServiceFactory::class,
                 UnauthorizedStrategy::class           => ConfigAbstractFactory::class,
                 AuthorizeService::class               => AuthorizeServiceFactory::class,
                 AssertionService::class               => AssertionServiceFactory::class,
+                AuthenticationIdentityProvider::class => AuthenticationIdentityProviderFactory::class,
                 RuleWithAssertion::class              => RouteGuardServiceFactory::class
             ],
         ];
@@ -47,11 +50,7 @@ class ConfigProvider
     ])] public function getConfigAbstractFactory(): array
     {
         return [
-            AuthenticationIdentityProvider::class => [
-                AuthenticationService::class,
-                'BjyAuthorize\Config'
-            ],
-            UnauthorizedStrategy::class           => [
+            UnauthorizedStrategy::class => [
                 AuthenticationService::class,
                 'BjyAuthorize\Config'
             ]

@@ -6,6 +6,8 @@ namespace Jield\Authorize\Provider\Identity;
 
 use JetBrains\PhpStorm\Pure;
 use Jield\Authorize\Role\UserAsRole;
+use Jield\Authorize\Service\AccessRolesByUserInterface;
+use Jield\Authorize\Service\HasPermitInterface;
 use Laminas\Authentication\AuthenticationService;
 
 final class AuthenticationIdentityProvider extends \BjyAuthorize\Provider\Identity\AuthenticationIdentityProvider
@@ -18,6 +20,8 @@ final class AuthenticationIdentityProvider extends \BjyAuthorize\Provider\Identi
 
     #[Pure] public function __construct(
         AuthenticationService $authService,
+        private AccessRolesByUserInterface $accessOrUserService,
+        private HasPermitInterface $permitService,
         array $authorizeConfig
     ) {
         parent::__construct($authService);
@@ -40,12 +44,26 @@ final class AuthenticationIdentityProvider extends \BjyAuthorize\Provider\Identi
         return $this->authService->hasIdentity();
     }
 
+    public function rolesHaveAccess(string|array $roles): bool
+    {
+        if (!is_array($roles)) {
+            $roles = [$roles];
+        }
+
+        return !empty(array_intersect($roles, $this->getIdentityRoles()));
+    }
+
     public function getIdentityRoles(): array
     {
         if (!$this->authService->hasIdentity()) {
             return [$this->defaultRole];
         }
 
-        return $this->adminService->findAccessRolesByContactAsArray($this->authService->getIdentity());
+        return $this->accessOrUserService->getAccessRolesByUser($this->authService->getIdentity());
+    }
+
+    public function hasPermit(object $resource, string|array $privilege): bool
+    {
+        return $this->permitService->hasPermit($this->authService->getIdentity(), $resource, $privilege);
     }
 }

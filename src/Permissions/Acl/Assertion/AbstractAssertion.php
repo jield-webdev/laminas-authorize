@@ -29,7 +29,7 @@ abstract class AbstractAssertion implements AssertionInterface
 
     protected function hasPermit($entity, string|array $privilege): bool
     {
-        return $this->authenticationIdentityProvider->hasPermit($privilege, $entity);
+        return $this->authenticationIdentityProvider->hasPermit($entity, $privilege);
     }
 
     protected function parsePrivilege(?string $privilege): string
@@ -40,7 +40,7 @@ abstract class AbstractAssertion implements AssertionInterface
         }
 
         if (!isset($this->routeMatch)) {
-            throw new \RuntimeException('Calling parsePrivige before setting the routematch is not possible');
+            throw new \RuntimeException('Calling parsePrivilegde before setting the routematch is not possible');
         }
 
         return $this->routeMatch->getParam('privilege') ?? $this->routeMatch->getParam('action');
