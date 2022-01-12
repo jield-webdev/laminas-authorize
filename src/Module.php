@@ -23,13 +23,13 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
         ];
     }
 
-    public function onBootstrap(EventInterface $event): void
+    public function onBootstrap(EventInterface $e): void
     {
         /** @var ApplicationInterface $app */
-        $app = $event->getTarget();
+        $app = $e->getTarget();
         /** @var ServiceManager $serviceManager */
         $serviceManager = $app->getServiceManager();
-        
+
         $ruleWithAssertion = $serviceManager->get(RuleWithAssertion::class);
         $ruleWithAssertion->attach($app->getEventManager());
     }

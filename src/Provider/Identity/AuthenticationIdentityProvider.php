@@ -65,7 +65,7 @@ final class AuthenticationIdentityProvider extends \BjyAuthorize\Provider\Identi
 
     public function hasPermit(object $resource, string|array $privilege): bool
     {
-        return $this->permitService->hasPermit($this->authService->getIdentity(), $resource, $privilege);
+        return $this->permitService->hasPermit($this->getIdentity(), $resource, $privilege);
     }
 
     public function hasRole(string|array|Collection $roles): bool

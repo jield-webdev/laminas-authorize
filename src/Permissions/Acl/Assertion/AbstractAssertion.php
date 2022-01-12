@@ -8,14 +8,14 @@ use Interop\Container\ContainerInterface;
 use Jield\Authorize\Provider\Identity\AuthenticationIdentityProvider;
 use Jield\Authorize\Role\UserAsRole;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
-use Laminas\Router\Http\RouteMatch;
+use Laminas\Router\RouteMatch;
 use phpDocumentor\Reflection\Types\Collection;
 
 abstract class AbstractAssertion implements AssertionInterface
 {
     protected AuthenticationIdentityProvider $authenticationIdentityProvider;
-    protected UserAsRole                     $userAsRole;
-    protected RouteMatch                     $routeMatch;
+    protected UserAsRole $userAsRole;
+    protected RouteMatch $routeMatch;
 
     public function __construct(protected ContainerInterface $container)
     {
@@ -46,7 +46,7 @@ abstract class AbstractAssertion implements AssertionInterface
         }
 
         if (!isset($this->routeMatch)) {
-            throw new \RuntimeException('Calling parsePrivilegde before setting the routematch is not possible');
+            throw new \RuntimeException('Calling parsePrivilege before setting the routematch is not possible');
         }
 
         return $this->routeMatch->getParam('privilege') ?? $this->routeMatch->getParam('action');
@@ -56,5 +56,4 @@ abstract class AbstractAssertion implements AssertionInterface
     {
         return $this->authenticationIdentityProvider->hasIdentity();
     }
-
 }
