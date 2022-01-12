@@ -30,9 +30,6 @@
       "Jield\\AuthorizeTest\\": "test"
     }
   },
-  "bin": [
-    "bin"
-  ],
   "config": {
     "vendor-dir": "vendor",
     "optimize-autoloader": true

@@ -9,6 +9,7 @@ use Jield\Authorize\Provider\Identity\AuthenticationIdentityProvider;
 use Jield\Authorize\Role\UserAsRole;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Router\Http\RouteMatch;
+use phpDocumentor\Reflection\Types\Collection;
 
 abstract class AbstractAssertion implements AssertionInterface
 {
@@ -30,6 +31,11 @@ abstract class AbstractAssertion implements AssertionInterface
     protected function hasPermit($entity, string|array $privilege): bool
     {
         return $this->authenticationIdentityProvider->hasPermit($entity, $privilege);
+    }
+
+    protected function hasRole(string|array|Collection $roles): bool
+    {
+        return $this->authenticationIdentityProvider->hasRole(roles: $roles);
     }
 
     protected function parsePrivilege(?string $privilege): string
