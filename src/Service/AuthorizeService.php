@@ -2,9 +2,9 @@
 
 namespace Jield\Authorize\Service;
 
-use BjyAuthorize\Provider\Identity\ProviderInterface as IdentityProvider;
 use BjyAuthorize\Service\Authorize;
 use Interop\Container\ContainerInterface;
+use Jield\Authorize\Provider\Identity\AuthenticationIdentityProvider;
 use Jield\Authorize\Role\UserAsRole;
 use Laminas\Cache\Exception\ExceptionInterface;
 use Laminas\Cache\Storage\Adapter\Redis;
@@ -15,9 +15,10 @@ use Psr\Container\NotFoundExceptionInterface;
 
 class AuthorizeService extends Authorize
 {
-    private array              $rulesWithAssertions = [];
-    private Redis              $cache;
-    private ContainerInterface $container;
+    private array                          $rulesWithAssertions = [];
+    private Redis                          $cache;
+    private ContainerInterface             $container;
+    private AuthenticationIdentityProvider $authenticationIdentityProvider;
 
     /**
      * @throws ContainerExceptionInterface
@@ -25,16 +26,19 @@ class AuthorizeService extends Authorize
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->container = $container;
-        /** @var StorageInterface $cache */
-        $this->cache = $container->get('BjyAuthorize\Cache');
+        $this->container                      = $container;
+        $this->authenticationIdentityProvider = $container->get(AuthenticationIdentityProvider::class);
         parent::__construct($container->get('BjyAuthorize\Config'), $container);
+
+        $cacheEnabled = $this->config['cache_enabled'] ?? false;
+        if ($cacheEnabled) {
+            /** @var StorageInterface $cache */
+            $this->cache = $container->get('BjyAuthorize\Cache');
+        }
     }
 
     /**
-     * @throws NotFoundExceptionInterface
      * @throws ExceptionInterface
-     * @throws ContainerExceptionInterface
      */
     public function load(): void
     {
@@ -62,11 +66,10 @@ class AuthorizeService extends Authorize
             }
         }
 
-        $this->setIdentityProvider($this->container->get(IdentityProvider::class));
+        //$this->setIdentityProvider($this->authenticationIdentityProvider);
+        $parentRoles = $this->authenticationIdentityProvider->getIdentityRoles();
 
-        $parentRoles = $this->getIdentityProvider()->getIdentityRoles();
-
-        $this->acl->addRole($this->getIdentity(), $parentRoles);
+        $this->acl->addRole($this->getIdentityAsRole(), $parentRoles);
     }
 
     private function loadAcl(): void
@@ -121,15 +124,13 @@ class AuthorizeService extends Authorize
         $this->acl->allow($roles, $resources, $privileges);
     }
 
-    public function getIdentity(): UserAsRole
+    public function getIdentityAsRole(): UserAsRole
     {
-        return $this->getIdentityProvider()->getIdentity();
+        return $this->authenticationIdentityProvider->getIdentityAsRole();
     }
 
     public function getIdentityRoles(): array
     {
-        /** @var AuthenticationIdentityProvider $identityProvider */
-        $identityProvider = $this->container->get(AuthenticationIdentityProvider::class);
-        return $this->getIdentityProvider()->getIdentityRoles();
+        return $this->authenticationIdentityProvider->getIdentityRoles();
     }
 }

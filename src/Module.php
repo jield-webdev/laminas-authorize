@@ -6,11 +6,12 @@ use Jield\Authorize\Rule\RuleWithAssertion;
 use Laminas\EventManager\EventInterface;
 use Laminas\ModuleManager\Feature\BootstrapListenerInterface;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
+use Laminas\ModuleManager\Feature\DependencyIndicatorInterface;
 use Laminas\Mvc\ApplicationInterface;
 use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 use Laminas\ServiceManager\ServiceManager;
 
-class Module implements ConfigProviderInterface, BootstrapListenerInterface
+class Module implements ConfigProviderInterface, BootstrapListenerInterface, DependencyIndicatorInterface
 {
     public function getConfig(): array
     {
@@ -32,5 +33,10 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
 
         $ruleWithAssertion = $serviceManager->get(RuleWithAssertion::class);
         $ruleWithAssertion->attach($app->getEventManager());
+    }
+
+    public function getModuleDependencies(): array
+    {
+        return ['BjyAuthorize'];
     }
 }

@@ -33,7 +33,7 @@ abstract class AbstractAssertion implements AssertionInterface
         return $this->authenticationIdentityProvider->hasPermit($entity, $privilege);
     }
 
-    protected function hasRole(string|array|Collection $roles): bool
+    protected function hasRole(string|array|int|Collection $roles): bool
     {
         return $this->authenticationIdentityProvider->hasRole(roles: $roles);
     }

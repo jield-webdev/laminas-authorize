@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Jield\Authorize\Provider\Identity;
 
+use Doctrine\Common\Collections\Collection;
 use JetBrains\PhpStorm\Pure;
 use Jield\Authorize\Role\UserAsRole;
+use Jield\Authorize\Role\UserAsRoleInterface;
 use Jield\Authorize\Service\AccessRolesByUserInterface;
 use Jield\Authorize\Service\HasPermitInterface;
 use Laminas\Authentication\AuthenticationService;
@@ -31,7 +33,7 @@ final class AuthenticationIdentityProvider extends \BjyAuthorize\Provider\Identi
         $this->authenticatedRole = $authorizeConfig['authenticated_role'] ?? self::ACCESS_AUTHETICATED;
     }
 
-    public function getIdentity(): UserAsRole
+    public function getIdentityAsRole(): UserAsRole
     {
         if (!$this->authService->hasIdentity()) {
             return new UserAsRole(null);
@@ -68,7 +70,16 @@ final class AuthenticationIdentityProvider extends \BjyAuthorize\Provider\Identi
         return $this->permitService->hasPermit($this->getIdentity(), $resource, $privilege);
     }
 
-    public function hasRole(string|array|Collection $roles): bool
+    public function getIdentity(): ?UserAsRoleInterface
+    {
+        if (!$this->authService->hasIdentity()) {
+            return null;
+        }
+
+        return $this->authService->getIdentity();
+    }
+
+    public function hasRole(string|array|int|Collection $roles): bool
     {
         if ($roles instanceof Collection) {
             $roles = $roles->map(fn(RoleInterface $role) => $role->getRoleId())->toArray();
