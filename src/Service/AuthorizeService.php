@@ -129,6 +129,15 @@ class AuthorizeService extends Authorize
         return $this->authenticationIdentityProvider->getIdentityAsRole();
     }
 
+    /**
+     * This function is very important and overrides the deefault "bjyauhorize-dentity
+     * @return UserAsRole|string
+     */
+    public function getIdentity()
+    {
+        return $this->authenticationIdentityProvider->getIdentityAsRole();
+    }
+
     public function getIdentityRoles(): array
     {
         return $this->authenticationIdentityProvider->getIdentityRoles();

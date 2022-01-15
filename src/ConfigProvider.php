@@ -11,7 +11,7 @@ use Jield\Authorize\Factory\AuthorizeServiceFactory;
 use Jield\Authorize\Factory\ConfigServiceFactory;
 use Jield\Authorize\Factory\RuleWithAssertionFactory;
 use Jield\Authorize\Provider\Identity\AuthenticationIdentityProvider;
-use Jield\Authorize\Rule\RuleWithAssertion;
+use Jield\Authorize\Rule\RulesWithAssertion;
 use Jield\Authorize\Service\AssertionService;
 use Jield\Authorize\Service\AuthorizeService;
 use Jield\Authorize\View\UnauthorizedStrategy;
@@ -39,7 +39,7 @@ class ConfigProvider
                 AuthorizeService::class               => AuthorizeServiceFactory::class,
                 AssertionService::class               => AssertionServiceFactory::class,
                 AuthenticationIdentityProvider::class => AuthenticationIdentityProviderFactory::class,
-                RuleWithAssertion::class              => RuleWithAssertionFactory::class
+                RulesWithAssertion::class             => RuleWithAssertionFactory::class
             ],
         ];
     }

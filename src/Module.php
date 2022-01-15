@@ -2,7 +2,7 @@
 
 namespace Jield\Authorize;
 
-use Jield\Authorize\Rule\RuleWithAssertion;
+use Jield\Authorize\Rule\RulesWithAssertion;
 use Laminas\EventManager\EventInterface;
 use Laminas\ModuleManager\Feature\BootstrapListenerInterface;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
@@ -31,7 +31,7 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface, Dep
         /** @var ServiceManager $serviceManager */
         $serviceManager = $app->getServiceManager();
 
-        $ruleWithAssertion = $serviceManager->get(RuleWithAssertion::class);
+        $ruleWithAssertion = $serviceManager->get(RulesWithAssertion::class);
         $ruleWithAssertion->attach($app->getEventManager());
     }
 
