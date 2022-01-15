@@ -79,6 +79,11 @@ final class AuthenticationIdentityProvider extends \BjyAuthorize\Provider\Identi
         return $this->authService->getIdentity();
     }
 
+    public function hasGeneralPermit(string $className, string $privilege): bool
+    {
+        return $this->permitService->hasGeneralPermit($this->getIdentity(), $className, $privilege);
+    }
+
     public function hasRole(string|array|int|Collection $roles): bool
     {
         if ($roles instanceof Collection) {
