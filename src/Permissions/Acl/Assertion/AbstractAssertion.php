@@ -7,6 +7,7 @@ namespace Jield\Authorize\Permissions\Acl\Assertion;
 use Interop\Container\ContainerInterface;
 use Jield\Authorize\Provider\Identity\AuthenticationIdentityProvider;
 use Jield\Authorize\Role\UserAsRole;
+use Jield\Authorize\Role\UserAsRoleInterface;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Router\RouteMatch;
 use phpDocumentor\Reflection\Types\Collection;
@@ -14,8 +15,8 @@ use phpDocumentor\Reflection\Types\Collection;
 abstract class AbstractAssertion implements AssertionInterface
 {
     protected AuthenticationIdentityProvider $authenticationIdentityProvider;
-    protected UserAsRole $userAsRole;
-    protected RouteMatch $routeMatch;
+    protected UserAsRole                     $userAsRole;
+    protected RouteMatch                     $routeMatch;
 
     public function __construct(protected ContainerInterface $container)
     {
@@ -30,7 +31,34 @@ abstract class AbstractAssertion implements AssertionInterface
 
     protected function hasPermit($entity, string|array $privilege): bool
     {
+        if (!$this->isLoggedIn()) {
+            return false;
+        }
+
         return $this->authenticationIdentityProvider->hasPermit($entity, $privilege);
+    }
+
+    protected function isLoggedIn(): bool
+    {
+        return $this->authenticationIdentityProvider->hasIdentity();
+    }
+
+    protected function hasGeneralPermit(string $className, string $privilege): bool
+    {
+        if (!$this->isLoggedIn()) {
+            return false;
+        }
+
+        return $this->authenticationIdentityProvider->hasGeneralPermit($className, $privilege);
+    }
+
+    protected function getIdentity(): UserAsRoleInterface
+    {
+        if (!$this->authenticationIdentityProvider->hasIdentity()) {
+            throw new \RuntimeException('Calling getIdentity when nog logged in is not possible');
+        }
+
+        return $this->authenticationIdentityProvider->getIdentity();
     }
 
     protected function hasRole(string|array|int|Collection $roles): bool
@@ -50,10 +78,5 @@ abstract class AbstractAssertion implements AssertionInterface
         }
 
         return $this->routeMatch->getParam('privilege') ?? $this->routeMatch->getParam('action');
-    }
-
-    protected function isLoggedIn(): bool
-    {
-        return $this->authenticationIdentityProvider->hasIdentity();
     }
 }
