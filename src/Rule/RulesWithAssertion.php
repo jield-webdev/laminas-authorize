@@ -31,6 +31,7 @@ class RulesWithAssertion extends Route
 
                     if ($assert instanceof AbstractAssertion) {
                         $assert->setRouteMatch($event->getRouteMatch());
+                        $assert->setRequest($event->getRequest());
                     }
 
                     //Do not specify any roles, we do that in the assertion, giving a role would lead to ignorance of the assertion

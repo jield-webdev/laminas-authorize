@@ -8,8 +8,10 @@ use Interop\Container\ContainerInterface;
 use Jield\Authorize\Provider\Identity\AuthenticationIdentityProvider;
 use Jield\Authorize\Role\UserAsRole;
 use Jield\Authorize\Role\UserAsRoleInterface;
+use Laminas\Http\Request;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Router\RouteMatch;
+use Laminas\Stdlib\RequestInterface;
 use phpDocumentor\Reflection\Types\Collection;
 
 abstract class AbstractAssertion implements AssertionInterface
@@ -17,6 +19,7 @@ abstract class AbstractAssertion implements AssertionInterface
     protected AuthenticationIdentityProvider $authenticationIdentityProvider;
     protected UserAsRole                     $userAsRole;
     protected RouteMatch                     $routeMatch;
+    protected RequestInterface|Request       $request;
 
     public function __construct(protected ContainerInterface $container)
     {
@@ -26,6 +29,12 @@ abstract class AbstractAssertion implements AssertionInterface
     public function setRouteMatch(RouteMatch $routeMatch): AbstractAssertion
     {
         $this->routeMatch = $routeMatch;
+        return $this;
+    }
+
+    public function setRequest(RequestInterface $request): AbstractAssertion
+    {
+        $this->request = $request;
         return $this;
     }
 
