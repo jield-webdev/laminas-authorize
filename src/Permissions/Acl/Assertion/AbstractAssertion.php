@@ -12,7 +12,7 @@ use Laminas\Http\Request;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Router\RouteMatch;
 use Laminas\Stdlib\RequestInterface;
-use phpDocumentor\Reflection\Types\Collection;
+use Doctrine\Common\Collections\Collection;
 
 abstract class AbstractAssertion implements AssertionInterface
 {
