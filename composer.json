@@ -16,7 +16,7 @@
     "kokspflanze/bjy-authorize": "^2.4",
     "laminas/laminas-cache-storage-adapter-filesystem": "^2.4",
     "webmozart/assert": "^1.11.0",
-    "doctrine/orm": "^3.0"
+    "doctrine/orm": "^2.13.3 || ^3.0"
   },
   "require-dev": {
     "iteaoffice/testing": "^3.5",
