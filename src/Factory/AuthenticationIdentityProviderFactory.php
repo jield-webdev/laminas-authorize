@@ -10,6 +10,7 @@ use Jield\Authorize\Service\AccessRolesByUserInterface;
 use Jield\Authorize\Service\HasPermitInterface;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Webmozart\Assert\Assert;
 
 final class AuthenticationIdentityProviderFactory implements FactoryInterface
 {
@@ -37,6 +38,10 @@ final class AuthenticationIdentityProviderFactory implements FactoryInterface
                 )
             );
         }
+
+        //Check if the services have the correct interfaces
+        Assert::implementsInterface($config['access_service'], AccessRolesByUserInterface::class);
+        Assert::implementsInterface($config['permit_service'], HasPermitInterface::class);
 
         $dependencies = [
             $container->get(AuthenticationService::class),

@@ -6,7 +6,7 @@ be serialized
 Default config file
 
 The access_service has to implement ```AccessRolesByUser``` interface and permit_service the ```HasPermitInterface```
-the User class has to implement ```UserAsRoleInterface```
+the User class has to implement ```UserAsRoleInterface``` and the role class ```RoleInterface```
 
 Make sure that 'BjyAuthorize' is enabled before 'Jield\Authorize' in module.config
 

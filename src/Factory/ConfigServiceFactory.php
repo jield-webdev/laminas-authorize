@@ -7,7 +7,9 @@ namespace Jield\Authorize\Factory;
 use BjyAuthorize\Provider\Role\ObjectRepositoryProvider;
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
+use Laminas\Permissions\Acl\Role\RoleInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Webmozart\Assert\Assert;
 
 class ConfigServiceFactory implements FactoryInterface
 {
@@ -17,6 +19,9 @@ class ConfigServiceFactory implements FactoryInterface
 
         $bjyAuthorizeConfig   = $config['bjyauthorize'];
         $jieldAuthorizeConfig = $config['jield_authorize'];
+
+        //Check if the role entity class implements the RoleInterface
+        Assert::implementsInterface($jieldAuthorizeConfig['role_entity_class'], RoleInterface::class);
 
         //Inject the role_provider
         $bjyAuthorizeConfig['role_providers'] = [

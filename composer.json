@@ -12,12 +12,14 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "php": "^8.0 || ^8.1",
+    "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
     "kokspflanze/bjy-authorize": "^2.4",
-    "doctrine/orm": "^2.11 || ^3.0",
-    "iteaoffice/testing": "^3"
+    "laminas/laminas-cache-storage-adapter-filesystem": "^2.4",
+    "webmozart/assert": "^1.11.0",
+    "doctrine/orm": "^3.0"
   },
   "require-dev": {
+    "iteaoffice/testing": "^3.5",
     "roave/security-advisories": "dev-latest"
   },
   "autoload": {
@@ -32,7 +34,10 @@
   },
   "config": {
     "vendor-dir": "vendor",
-    "optimize-autoloader": true
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   },
   "extra": {
     "laminas": {
@@ -40,8 +45,8 @@
       "config-provider": "Jield\\Authorize\\ConfigProvider"
     },
     "branch-alias": {
-      "dev-master": "0.1-dev",
-      "dev-develop": "0.2-dev"
+      "dev-master": "1.0-dev",
+      "dev-develop": "1.1-dev"
     }
   },
   "scripts": {

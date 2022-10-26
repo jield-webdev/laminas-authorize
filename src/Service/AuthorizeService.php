@@ -43,7 +43,7 @@ class AuthorizeService extends Authorize
     public function load(): void
     {
         if (null === $this->loaded) {
-            return;
+           return;
         }
 
         $this->loaded = null;
