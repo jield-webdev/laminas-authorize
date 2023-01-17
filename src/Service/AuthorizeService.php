@@ -8,7 +8,6 @@ use Jield\Authorize\Provider\Identity\AuthenticationIdentityProvider;
 use Jield\Authorize\Role\UserAsRole;
 use Laminas\Cache\Exception\ExceptionInterface;
 use Laminas\Cache\Storage\Adapter\AbstractAdapter;
-use Laminas\Cache\Storage\Adapter\Redis;
 use Laminas\Cache\Storage\StorageInterface;
 use Laminas\Permissions\Acl\Acl;
 use Psr\Container\ContainerExceptionInterface;

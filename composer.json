@@ -15,6 +15,7 @@
     "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
     "kokspflanze/bjy-authorize": "^2.4",
     "laminas/laminas-cache-storage-adapter-filesystem": "^2.4",
+    "laminas/laminas-session": "^2.16.0",
     "webmozart/assert": "^1.11.0",
     "doctrine/orm": "^2.13.3 || ^3.0"
   },
@@ -62,11 +63,11 @@
     "lint": [
       "@php-lint"
     ],
-    "php-lint": "parallel-lint module",
-    "phpstan": "phpstan analyze module",
-    "cs": "phpcs --extensions=php,twig module",
-    "cbf": "phpcbf --extensions=php module",
-    "cs-fix": "php-cs-fixer fix -v module",
+    "php-lint": "parallel-lint src",
+    "phpstan": "phpstan analyze src  --memory-limit=2G",
+    "cs": "phpcs --extensions=php,twig src",
+    "cbf": "phpcbf --extensions=php src",
+    "cs-fix": "php-cs-fixer fix -v src",
     "test": "phpunit"
   }
 }

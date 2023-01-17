@@ -13,6 +13,8 @@ class AssertionService
 {
     private Acl $acl;
 
+    private AuthorizeService $authorizeService;
+
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -20,8 +22,9 @@ class AssertionService
     public function __construct(private ServiceManager $container)
     {
         /** @var AuthorizeService $authorizeService */
-        $authorizeService = $this->container->get(AuthorizeService::class);
-        $this->acl        = $authorizeService->getAcl();
+        $authorizeService       = $this->container->get(AuthorizeService::class);
+        $this->authorizeService = $authorizeService;
+        $this->acl              = $this->authorizeService->getAcl();
     }
 
     /**
@@ -33,5 +36,10 @@ class AssertionService
             $this->acl->addResource($entity);
             $this->acl->allow([], $entity, [], $this->container->build($assertion));
         }
+    }
+
+    public function isUserAllowed($entity, string $privilege): bool
+    {
+        return $this->authorizeService->isAllowed(resource: $entity, privilege: $privilege);
     }
 }

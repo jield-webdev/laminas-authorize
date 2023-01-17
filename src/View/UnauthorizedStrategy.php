@@ -64,7 +64,7 @@ final class UnauthorizedStrategy extends \BjyAuthorize\View\UnauthorizedStrategy
 
                     //Store the referrer in a session
                     if ($redirect) {
-                        //Grab the qeury and append it to the URL
+                        //Grab the query and append it to the URL
                         $query             = $router->getRequestUri()->getQuery();
                         $session           = new Container('session');
                         $session->redirect = $redirect . (empty($query) ? '' : '?' . $query);
