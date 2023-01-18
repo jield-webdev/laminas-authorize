@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Jield\Authorize\Permissions\Acl\Assertion;
 
-use Interop\Container\ContainerInterface;
+use Doctrine\Common\Collections\Collection;
+use Psr\Container\ContainerInterface;
 use Jield\Authorize\Provider\Identity\AuthenticationIdentityProvider;
 use Jield\Authorize\Role\UserAsRole;
 use Jield\Authorize\Role\UserAsRoleInterface;
@@ -12,14 +13,16 @@ use Laminas\Http\Request;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Router\RouteMatch;
 use Laminas\Stdlib\RequestInterface;
-use Doctrine\Common\Collections\Collection;
 
 abstract class AbstractAssertion implements AssertionInterface
 {
     protected AuthenticationIdentityProvider $authenticationIdentityProvider;
-    protected UserAsRole                     $userAsRole;
-    protected RouteMatch                     $routeMatch;
-    protected RequestInterface|Request       $request;
+
+    protected UserAsRole $userAsRole;
+
+    protected RouteMatch $routeMatch;
+
+    protected RequestInterface|Request $request;
 
     public function __construct(protected ContainerInterface $container)
     {
@@ -41,6 +44,7 @@ abstract class AbstractAssertion implements AssertionInterface
     protected function hasPermit($entity, string|array $privilege): bool
     {
         if (!$this->isLoggedIn()) {
+            print 'Not logged in';
             return false;
         }
 

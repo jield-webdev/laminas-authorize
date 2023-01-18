@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jield\Authorize\Factory;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Jield\Authorize\Provider\Identity\AuthenticationIdentityProvider;
 use Jield\Authorize\Service\AccessRolesByUserInterface;
 use Jield\Authorize\Service\HasPermitInterface;

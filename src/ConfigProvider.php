@@ -2,6 +2,7 @@
 
 namespace Jield\Authorize;
 
+use BjyAuthorize\Guard\Route;
 use BjyAuthorize\Provider\Role\ObjectRepositoryProvider;
 use BjyAuthorize\Service\Authorize;
 use Doctrine\ORM\EntityManager;
@@ -39,7 +40,8 @@ class ConfigProvider
                 AuthorizeService::class               => AuthorizeServiceFactory::class,
                 AssertionService::class               => AssertionServiceFactory::class,
                 AuthenticationIdentityProvider::class => AuthenticationIdentityProviderFactory::class,
-                RulesWithAssertion::class             => RuleWithAssertionFactory::class
+                RulesWithAssertion::class             => RuleWithAssertionFactory::class,
+                Route::class => Service\RouteGuardServiceFactory::class,
             ],
         ];
     }

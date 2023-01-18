@@ -6,7 +6,7 @@ namespace Jield\Authorize\Factory;
 
 use BjyAuthorize\Provider\Role\ObjectRepositoryProvider;
 use Doctrine\ORM\EntityManager;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Webmozart\Assert\Assert;

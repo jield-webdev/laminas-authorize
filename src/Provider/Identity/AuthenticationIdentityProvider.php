@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jield\Authorize\Provider\Identity;
 
+use Admin\Entity\User;
 use Doctrine\Common\Collections\Collection;
 use JetBrains\PhpStorm\Pure;
 use Jield\Authorize\Role\UserAsRole;

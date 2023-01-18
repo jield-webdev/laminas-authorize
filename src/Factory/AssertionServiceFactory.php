@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jield\Authorize\Factory;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Jield\Authorize\Service\AssertionService;
 use Jield\Authorize\Service\AuthorizeService;
 use Laminas\ServiceManager\Factory\FactoryInterface;

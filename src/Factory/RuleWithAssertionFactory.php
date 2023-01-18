@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jield\Authorize\Factory;
 
 use BjyAuthorize\Guard\Route;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Jield\Authorize\Rule\RulesWithAssertion;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 

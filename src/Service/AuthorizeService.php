@@ -3,7 +3,7 @@
 namespace Jield\Authorize\Service;
 
 use BjyAuthorize\Service\Authorize;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Jield\Authorize\Provider\Identity\AuthenticationIdentityProvider;
 use Jield\Authorize\Role\UserAsRole;
 use Laminas\Cache\Exception\ExceptionInterface;
