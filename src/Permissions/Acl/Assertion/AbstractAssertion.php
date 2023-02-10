@@ -44,7 +44,6 @@ abstract class AbstractAssertion implements AssertionInterface
     protected function hasPermit($entity, string|array $privilege): bool
     {
         if (!$this->isLoggedIn()) {
-            print 'Not logged in';
             return false;
         }
 
