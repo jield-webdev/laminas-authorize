@@ -11,10 +11,10 @@
     }
   ],
   "require": {
-    "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
+    "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0",
     "kokspflanze/bjy-authorize": "^2.4",
     "laminas/laminas-cache-storage-adapter-filesystem": "^2.3",
-    "laminas/laminas-session": "^2.16",
+    "laminas/laminas-session": "^2.17",
     "webmozart/assert": "^1.11.0",
     "doctrine/orm": "^2.13.3 || ^3.0"
   },
