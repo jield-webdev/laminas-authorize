@@ -19,20 +19,20 @@ use Laminas\View\Model\ViewModel;
 
 final class UnauthorizedStrategy extends \BjyAuthorize\View\UnauthorizedStrategy
 {
-    #[Pure] public function __construct(private AuthenticationService $authenticationService, array $config)
+    #[Pure] public function __construct(private readonly AuthenticationService $authenticationService, array $config)
     {
         parent::__construct($config['template'] ?? 'default');
     }
 
-    public function onDispatchError(MvcEvent $event)
+    public function onDispatchError(MvcEvent $event): void
     {
         // Do nothing if the result is a response object
         $result = $event->getResult();
 
-        /** @var HttpResponse $response */
+        /** @var \Laminas\Http\PhpEnvironment\Response $response */
         $response = $event->getResponse();
         if ($result instanceof Response || ($response && !$response instanceof HttpResponse)) {
-            return null;
+            return;
         }
         // Common view variables
         $viewVariables = [
@@ -65,27 +65,28 @@ final class UnauthorizedStrategy extends \BjyAuthorize\View\UnauthorizedStrategy
                     //Store the referrer in a session
                     if ($redirect) {
                         //Grab the query and append it to the URL
-                        $query             = $router->getRequestUri()->getQuery();
-                        $session           = new Container('session');
+                        $query   = $router->getRequestUri()->getQuery();
+                        $session = new Container('session');
+                        /** @phpstan-ignore-next-line */
                         $session->redirect = $redirect . (empty($query) ? '' : '?' . $query);
                     }
 
                     $response->getHeaders()->addHeaderLine('Location', $url);
                     $response->setStatusCode(302);
 
-                    return $response->sendHeaders();
+                    $event->setResponse($response);
                 }
                 break;
             case Application::ERROR_EXCEPTION:
                 if (!$event->getParam('exception') instanceof UnAuthorizedException) {
-                    return null;
+                    return;
                 }
                 $viewVariables['reason'] = $event->getParam('exception')
                     ->getMessage();
                 $viewVariables['error']  = 'error-unauthorized';
                 break;
             default:
-                return null;
+                return;
         }
 
         $model    = new ViewModel($viewVariables);
