@@ -19,7 +19,7 @@
     "doctrine/orm": "^2.13.3 || ^3.0"
   },
   "require-dev": {
-    "iteaoffice/testing": "^5.1-dev",
+    "iteaoffice/testing": "^5.0",
     "roave/security-advisories": "dev-latest"
   },
   "autoload": {
