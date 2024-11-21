@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0",
+    "php": "~8.3.0 || ~8.4.0",
     "kokspflanze/bjy-authorize": "^2.4",
     "laminas/laminas-cache-storage-adapter-filesystem": "^2.3 || ^3.0",
     "laminas/laminas-session": "^2.17",
@@ -19,7 +19,7 @@
     "doctrine/orm": "^2.13.3 || ^3.0"
   },
   "require-dev": {
-    "iteaoffice/testing": "^3.5",
+    "iteaoffice/testing": "^5.1-dev",
     "roave/security-advisories": "dev-latest"
   },
   "autoload": {
@@ -40,8 +40,8 @@
       "config-provider": "Jield\\Authorize\\ConfigProvider"
     },
     "branch-alias": {
-      "dev-master": "1.0-dev",
-      "dev-develop": "1.1-dev"
+      "dev-master": "2.0-dev",
+      "dev-develop": "2.1-dev"
     }
   },
   "scripts": {
@@ -58,7 +58,7 @@
       "@php-lint"
     ],
     "php-lint": "parallel-lint src",
-    "phpstan": "phpstan analyze src  --memory-limit=2G",
+    "phpstan": "phpstan analyze src --memory-limit=2G --level=3",
     "cs": "phpcs --extensions=php,twig src",
     "cbf": "phpcbf --extensions=php src",
     "cs-fix": "php-cs-fixer fix -v src",

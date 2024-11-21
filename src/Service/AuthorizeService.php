@@ -3,14 +3,13 @@
 namespace Jield\Authorize\Service;
 
 use BjyAuthorize\Service\Authorize;
-use Psr\Container\ContainerInterface;
 use Jield\Authorize\Provider\Identity\AuthenticationIdentityProvider;
 use Jield\Authorize\Role\UserAsRole;
 use Laminas\Cache\Exception\ExceptionInterface;
 use Laminas\Cache\Storage\Adapter\AbstractAdapter;
-use Laminas\Cache\Storage\StorageInterface;
 use Laminas\Permissions\Acl\Acl;
 use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 class AuthorizeService extends Authorize
@@ -35,8 +34,9 @@ class AuthorizeService extends Authorize
 
         $cacheEnabled = $this->config['cache_enabled'] ?? false;
         if ($cacheEnabled) {
-            /** @var StorageInterface $cache */
-            $this->cache = $container->get('BjyAuthorize\Cache');
+            /** @var AbstractAdapter $cache */
+            $cache       = $container->get('BjyAuthorize\Cache');
+            $this->cache = $cache;
         }
     }
 

@@ -2,14 +2,13 @@
 
 namespace Jield\Authorize\Role;
 
-use Laminas\ApiTools\MvcAuth\Identity\GuestIdentity;
 use Laminas\Permissions\Acl\Role\RoleInterface;
 
 class UserAsRole implements RoleInterface
 {
-    private null|UserAsRoleInterface|GuestIdentity $userAsRole;
+    private mixed $userAsRole;
 
-    public function __construct(null|UserAsRoleInterface|GuestIdentity $userAsRole)
+    public function __construct(mixed $userAsRole)
     {
         $this->userAsRole = $userAsRole;
     }
