@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "42ab1b63892c3bf85687aca93d4eb98f",
+    "content-hash": "720a40011ed50d39034b86d16c1af6cd",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -4107,7 +4107,7 @@
         },
         {
             "name": "iteaoffice/testing",
-            "version": "dev-develop",
+            "version": "v5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iteaoffice/testing.git",
@@ -4133,7 +4133,6 @@
                 "symfony/finder": "^6.4",
                 "vimeo/psalm": "^5.26"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -4164,7 +4163,7 @@
             "support": {
                 "email": "ticket@itea4.org",
                 "issues": "https://github.com/iteaoffice/testing/issues",
-                "source": "https://github.com/iteaoffice/testing/tree/develop"
+                "source": "https://github.com/iteaoffice/testing/tree/v5.0"
             },
             "time": "2024-11-21T12:43:41+00:00"
         },
@@ -7827,7 +7826,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "iteaoffice/testing": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,
