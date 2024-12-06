@@ -21,10 +21,10 @@ final class UnauthorizedStrategy extends \BjyAuthorize\View\UnauthorizedStrategy
 {
     #[Pure] public function __construct(private readonly AuthenticationService $authenticationService, array $config)
     {
-        parent::__construct($config['template'] ?? 'default');
+        parent::__construct('default' ?? $config['template']);
     }
 
-    public function onDispatchError(MvcEvent $event): Response
+    public function onDispatchError(MvcEvent $event): \Laminas\Http\PhpEnvironment\Response
     {
         // Do nothing if the result is a response object
         $result = $event->getResult();
@@ -32,7 +32,7 @@ final class UnauthorizedStrategy extends \BjyAuthorize\View\UnauthorizedStrategy
         /** @var \Laminas\Http\PhpEnvironment\Response $response */
         $response = $event->getResponse();
         if ($result instanceof Response || ($response && !$response instanceof HttpResponse)) {
-            return $result;
+            return $response;
         }
         // Common view variables
         $viewVariables = [
@@ -79,14 +79,14 @@ final class UnauthorizedStrategy extends \BjyAuthorize\View\UnauthorizedStrategy
                 break;
             case Application::ERROR_EXCEPTION:
                 if (!$event->getParam('exception') instanceof UnAuthorizedException) {
-                    return $result;
+                    return $response;
                 }
                 $viewVariables['reason'] = $event->getParam('exception')
                     ->getMessage();
                 $viewVariables['error']  = 'error-unauthorized';
                 break;
             default:
-                return $result;
+                return $response;
         }
 
         $model    = new ViewModel($viewVariables);
