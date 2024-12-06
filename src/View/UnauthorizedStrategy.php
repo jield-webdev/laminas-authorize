@@ -21,10 +21,10 @@ final class UnauthorizedStrategy extends \BjyAuthorize\View\UnauthorizedStrategy
 {
     #[Pure] public function __construct(private readonly AuthenticationService $authenticationService, array $config)
     {
-        parent::__construct($config['template'] ?? 'default');
+        parent::__construct('default' ?? $config['template']);
     }
 
-    public function onDispatchError(MvcEvent $event): void
+    public function onDispatchError(MvcEvent $event): \Laminas\Http\PhpEnvironment\Response
     {
         // Do nothing if the result is a response object
         $result = $event->getResult();
@@ -32,7 +32,7 @@ final class UnauthorizedStrategy extends \BjyAuthorize\View\UnauthorizedStrategy
         /** @var \Laminas\Http\PhpEnvironment\Response $response */
         $response = $event->getResponse();
         if ($result instanceof Response || ($response && !$response instanceof HttpResponse)) {
-            return;
+            return $response;
         }
         // Common view variables
         $viewVariables = [
@@ -74,19 +74,19 @@ final class UnauthorizedStrategy extends \BjyAuthorize\View\UnauthorizedStrategy
                     $response->getHeaders()->addHeaderLine('Location', $url);
                     $response->setStatusCode(302);
 
-                    $event->setResponse($response);
+                    return $response->sendHeaders();
                 }
                 break;
             case Application::ERROR_EXCEPTION:
                 if (!$event->getParam('exception') instanceof UnAuthorizedException) {
-                    return;
+                    return $response;
                 }
                 $viewVariables['reason'] = $event->getParam('exception')
                     ->getMessage();
                 $viewVariables['error']  = 'error-unauthorized';
                 break;
             default:
-                return;
+                return $response;
         }
 
         $model    = new ViewModel($viewVariables);
@@ -95,5 +95,7 @@ final class UnauthorizedStrategy extends \BjyAuthorize\View\UnauthorizedStrategy
         $event->getViewModel()->addChild($model);
         $response->setStatusCode(403);
         $event->setResponse($response);
+
+        return $response;
     }
 }
