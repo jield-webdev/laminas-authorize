@@ -21,7 +21,7 @@ final class UnauthorizedStrategy extends \BjyAuthorize\View\UnauthorizedStrategy
 {
     #[Pure] public function __construct(private readonly AuthenticationService $authenticationService, array $config)
     {
-        parent::__construct('default' ?? $config['template']);
+        parent::__construct('error/403' ?? $config['template']);
     }
 
     public function onDispatchError(MvcEvent $event): \Laminas\Http\PhpEnvironment\Response
