@@ -1887,16 +1887,16 @@
         },
         {
             "name": "laminas/laminas-session",
-            "version": "2.22.0",
+            "version": "2.23.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-session.git",
-                "reference": "97639e1b2392730b24aa7563e8e09fd22f6f6b1f"
+                "reference": "9015fcb3187e23f1f700de38605aeb44d05d7d8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-session/zipball/97639e1b2392730b24aa7563e8e09fd22f6f6b1f",
-                "reference": "97639e1b2392730b24aa7563e8e09fd22f6f6b1f",
+                "url": "https://api.github.com/repos/laminas/laminas-session/zipball/9015fcb3187e23f1f700de38605aeb44d05d7d8c",
+                "reference": "9015fcb3187e23f1f700de38605aeb44d05d7d8c",
                 "shasum": ""
             },
             "require": {
@@ -1966,7 +1966,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2024-11-17T00:02:53+00:00"
+            "time": "2025-01-27T11:08:22+00:00"
         },
         {
             "name": "laminas/laminas-stdlib",
@@ -7833,6 +7833,6 @@
     "platform": {
         "php": "~8.3.0 || ~8.4.0"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
