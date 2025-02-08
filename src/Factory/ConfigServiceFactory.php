@@ -6,9 +6,9 @@ namespace Jield\Authorize\Factory;
 
 use BjyAuthorize\Provider\Role\ObjectRepositoryProvider;
 use Doctrine\ORM\EntityManager;
-use Psr\Container\ContainerInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 use Webmozart\Assert\Assert;
 
 class ConfigServiceFactory implements FactoryInterface
@@ -41,6 +41,9 @@ class ConfigServiceFactory implements FactoryInterface
 
         //Override the authenticated role
         $bjyAuthorizeConfig['authenticated_role'] = $jieldAuthorizeConfig['authenticated_role'];
+
+        $bjyAuthorizeConfig['login_route'] = $jieldAuthorizeConfig['login_route'] ?? 'user/login';
+
 
         return $bjyAuthorizeConfig;
     }
